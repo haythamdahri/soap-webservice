@@ -23,7 +23,7 @@ public class PriceActionServiceImpl implements PriceActionService {
 	// Return bourse xml content
 	@Override
 	public String getBourse(Long id) {
-				
+
 		// Fetch bourse from database
 		Bourse bourse = this.bourseDao.find(id);
 		// parse object into xml
@@ -35,7 +35,7 @@ public class PriceActionServiceImpl implements PriceActionService {
 
 	@Override
 	public String getBourses() {
-		
+
 		// Fetch bourses from database
 		Bourses bourses = new Bourses(this.bourseDao.findAll());
 
@@ -45,15 +45,28 @@ public class PriceActionServiceImpl implements PriceActionService {
 		// Return xml results
 		return xmlBoursesContent;
 	}
-	
+
 	@Override
 	public String getBoursesById(Long id) {
-		
+
 		// Fetch bourses from database
 		Bourses bourses = new Bourses(this.bourseDao.findById(id));
 
 		// parse object into xml
 		String xmlBoursesContent = ObjectXmlConverter.jaxbObjectToXMLBourses(bourses);
+
+		// Return xml results
+		return xmlBoursesContent;
+
+	}
+
+	@Override
+	public String getActionHistory(String name) {
+		// Fetch bourses from database
+		Actions actions = new Actions(this.actionDao.findByName(name));
+
+		// parse object into xml
+		String xmlBoursesContent = ObjectXmlConverter.jaxbObjectToXMLActions(actions);
 
 		// Return xml results
 		return xmlBoursesContent;

@@ -17,7 +17,7 @@ create table bourse(
 
 create table action(
 	id bigint primary key auto_increment,
-	name varchar(255) not null,
+	name varchar(255) not null unique,
 	opening_amount double not null,
 	closing_amount double not null,
 	date timestamp default now(),

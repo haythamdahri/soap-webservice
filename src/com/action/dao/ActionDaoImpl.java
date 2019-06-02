@@ -56,6 +56,30 @@ public class ActionDaoImpl implements ActionDao {
 		}
 		return null;
 	}
+	
+	// name is unique
+	@Override
+	public Collection<Action> findByName(String name) {
+		try {
+			// Create new BourseDao object to retrieve bourse from its id
+			BourseDao bourseDao = new BourseDaoImpl();
+
+			PreparedStatement preparedStatement = this.connection.prepareStatement("select *from action where name=?");	
+			preparedStatement.setString(1, name);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			Collection<Action> actions = new ArrayList<Action>();
+			while( resultSet.next() ) {
+				Timestamp ts = resultSet.getTimestamp(5);
+		        Date date=new Date(ts.getTime());  
+				actions.add(new Action(String.valueOf(resultSet.getLong(1)), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), date, resultSet.getLong(6)));
+			}
+			return actions;
+		}
+		catch(Exception ex) {
+			System.out.println("Add actions by id exception: " + ex.getMessage());
+		}
+		return null;
+	}
 
 	@Override
 	public Collection<Action> findById(Long id) {

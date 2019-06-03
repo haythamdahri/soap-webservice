@@ -49,6 +49,23 @@ public class AdministrateurDaoImpl implements AdministrateurDao {
 		}
 		return null;
 	}
+	
+	@Override
+	public Administrateur find(String email, String password) {
+		try {
+			PreparedStatement preparedStatement = this.connection.prepareStatement("select *from administrateur where email=? and password=?");	
+			preparedStatement.setString(1, email);
+			preparedStatement.setString(2, password);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if( resultSet.next() ) {
+				return new Administrateur(String.valueOf(resultSet.getLong(1)), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5));
+			}
+		}
+		catch(Exception ex) {
+			System.out.println("Find administrateur exception: " + ex.getMessage());
+		}
+		return null;
+	}
 
 	@Override
 	public Collection<Administrateur> findAll() {

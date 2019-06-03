@@ -1,6 +1,10 @@
 package com.action.service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+
+import javax.xml.bind.DatatypeConverter;
 
 import com.action.dao.ActionDao;
 import com.action.dao.ActionDaoImpl;
@@ -59,6 +63,14 @@ public class PriceActionServiceImpl implements PriceActionService {
 		return xmlBoursesContent;
 
 	}
+	
+	@Override
+	public boolean addBourse(Bourse bourse) {
+
+		// Persist bourse into database
+		return this.bourseDao.add(bourse);
+
+	}
 
 	@Override
 	public String getActionHistory(String name) {
@@ -74,8 +86,7 @@ public class PriceActionServiceImpl implements PriceActionService {
 
 	@Override
 	public boolean updateBourse(Bourse bourse) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.bourseDao.update(bourse);
 	}
 
 	@Override
@@ -127,9 +138,38 @@ public class PriceActionServiceImpl implements PriceActionService {
 	}
 
 	@Override
+	public boolean isValidAdmin(String email, String password) {
+		try {
+
+			// Hash clair password
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			System.out.println("Password: " + password);
+		    md.update(password.getBytes());
+		    byte[] digest = md.digest();
+		    String passwordHash = DatatypeConverter.printHexBinary(digest);
+		    
+		    // Fetch admin from database
+			Administrateur administrateur = this.administrateurDao.find(email, passwordHash);
+			
+			return administrateur != null ? true :false;
+			
+		} 
+		catch(Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
 	public String getAdmin(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		// Fetch admin from database
+		Administrateur administrateur = this.administrateurDao.find(id);
+
+		// parse object into xml
+		String xmlActionsContent = ObjectXmlConverter.jaxbObjectToXMLAdmin(administrateur);
+
+		// Return xml results
+		return xmlActionsContent;
 	}
 
 	@Override

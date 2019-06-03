@@ -1,13 +1,13 @@
 package com.action.service;
 
 import java.io.StringWriter;
-import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import com.action.entities.Actions;
+import com.action.entities.Administrateur;
 import com.action.entities.Bourse;
 import com.action.entities.Bourses;
 
@@ -118,5 +118,41 @@ public class ObjectXmlConverter {
 			return null;
 		}
 	}
+	
+	// Convert administrator object to XML format
+		public static String jaxbObjectToXMLAdmin(Administrateur admin) {
+
+			if (admin == null) {
+				admin = new Administrateur();
+			}
+
+			try {
+				// Create JAXB Context
+				JAXBContext jaxbContext = JAXBContext.newInstance(Administrateur.class);
+
+				// Create Marshaller
+				Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+				// Required formatting??
+				jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+				// Print XML String to Console
+				StringWriter sw = new StringWriter();
+
+				// Write XML to StringWriter
+				jaxbMarshaller.marshal(admin, sw);
+
+				// Verify XML Content
+				String xmlContent = sw.toString();
+
+				// Return constructed xml object
+				return xmlContent;
+
+			} catch (JAXBException e) {
+				e.printStackTrace();
+				return null;
+			}
+
+		}
 
 }

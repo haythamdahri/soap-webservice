@@ -20,14 +20,16 @@ public class BourseDaoImpl implements BourseDao {
 	}
 	
 	@Override
-	public void add(Bourse bourse) {
+	public boolean add(Bourse bourse) {
 		try {
 			PreparedStatement preparedStatement = this.connection.prepareStatement("insert into bourse values (NULL, ?)");	
 			preparedStatement.setString(1, bourse.getName());
 			preparedStatement.executeUpdate();
+			return true;
 		}
 		catch(Exception ex) {
 			System.out.println("Add bourse exception: " + ex.getMessage());
+			return false;
 		}		
 	}
 

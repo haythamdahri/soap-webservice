@@ -13,6 +13,7 @@ public interface PriceActionService {
 
 	public String getBourse(Long id);
 	public String getBourses();
+	public boolean addBourse(Bourse bourse);
 	public String getBoursesById(Long id);
 	public boolean updateBourse(Bourse bourse);
 	public boolean deleteBourse(Long id);
@@ -25,6 +26,7 @@ public interface PriceActionService {
 	public boolean deleteAction(Long id);
 	
 	public String getAdmin(Long id);
+	public boolean isValidAdmin(String email, String password);
 	public Collection<Administrateur> getAdmins();
 	public boolean updateAdmin(Administrateur administrateur);
 	public boolean deleteAdmin(Long id);

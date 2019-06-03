@@ -6,7 +6,7 @@ import com.action.entities.Bourse;
 
 public interface BourseDao {
 	
-	public void add(Bourse bourse);
+	public boolean add(Bourse bourse);
 	public Bourse find(Long id);
 	public Collection<Bourse> findById(Long id);
 	public Collection<Bourse> findAll();

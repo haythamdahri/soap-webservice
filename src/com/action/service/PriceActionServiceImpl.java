@@ -91,7 +91,6 @@ public class PriceActionServiceImpl implements PriceActionService {
 
 	@Override
 	public boolean deleteBourse(Long id) {
-		// TODO Auto-generated method stub
 		return this.bourseDao.delete(id);
 	}
 
@@ -133,8 +132,7 @@ public class PriceActionServiceImpl implements PriceActionService {
 
 	@Override
 	public boolean updateAction(Action action) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.actionDao.update(action);
 	}
 
 	@Override

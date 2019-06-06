@@ -23,12 +23,13 @@ public class ActionDaoImpl implements ActionDao {
 	@Override
 	public void add(Action action) {
 		try {
-			PreparedStatement preparedStatement = this.connection.prepareStatement("insert into action values (NULL, ?, ?, ?, ?, ?)");	
+			PreparedStatement preparedStatement = this.connection.prepareStatement("insert into action values (NULL, ?, ?, ?, ?, ?, ?)");	
 			preparedStatement.setString(1, action.getName());
 			preparedStatement.setDouble(2, action.getOpeningAmount());
 			preparedStatement.setDouble(3, action.getClosingAmount());
 			preparedStatement.setDate(4, (Date) action.getDate());
-			preparedStatement.setLong(5, action.getBourseId());
+			preparedStatement.setDouble(5, action.getVariation());
+			preparedStatement.setLong(6, action.getBourseId());
 			preparedStatement.executeUpdate();
 		}
 		catch(Exception ex) {
@@ -48,7 +49,7 @@ public class ActionDaoImpl implements ActionDao {
 			if( resultSet.next() ) {
 				Timestamp ts = resultSet.getTimestamp(5);
 		        Date date=new Date(ts.getTime());  
-				return new Action(String.valueOf(resultSet.getLong(1)), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), date, resultSet.getLong(6));
+				return new Action(String.valueOf(resultSet.getLong(1)), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), date, resultSet.getLong(7));
 			}
 		}
 		catch(Exception ex) {
@@ -71,7 +72,7 @@ public class ActionDaoImpl implements ActionDao {
 			while( resultSet.next() ) {
 				Timestamp ts = resultSet.getTimestamp(5);
 		        Date date=new Date(ts.getTime());  
-				actions.add(new Action(String.valueOf(resultSet.getLong(1)), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), date, resultSet.getLong(6)));
+				actions.add(new Action(String.valueOf(resultSet.getLong(1)), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), date, resultSet.getLong(7)));
 			}
 			return actions;
 		}
@@ -94,7 +95,7 @@ public class ActionDaoImpl implements ActionDao {
 			while( resultSet.next() ) {
 				Timestamp ts = resultSet.getTimestamp(5);
 		        Date date=new Date(ts.getTime());  
-				actions.add(new Action(String.valueOf(resultSet.getLong(1)), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), date, resultSet.getLong(6)));
+				actions.add(new Action(String.valueOf(resultSet.getLong(1)), resultSet.getString(2), resultSet.getDouble(3), resultSet.getDouble(4), date, resultSet.getLong(7)));
 			}
 			return actions;
 		}

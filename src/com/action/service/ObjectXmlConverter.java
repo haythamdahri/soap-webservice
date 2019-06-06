@@ -6,6 +6,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import com.action.entities.Action;
 import com.action.entities.Actions;
 import com.action.entities.Administrateur;
 import com.action.entities.Bourse;
@@ -48,6 +49,42 @@ public class ObjectXmlConverter {
 		}
 
 	}
+	
+	// Convert action object to XML format
+		public static String jaxbObjectToXMLAction(Action action) {
+
+			if (action == null) {
+				action = new Action();
+			}
+
+			try {
+				// Create JAXB Context
+				JAXBContext jaxbContext = JAXBContext.newInstance(Action.class);
+
+				// Create Marshaller
+				Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+				// Required formatting??
+				jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+				// Print XML String to Console
+				StringWriter sw = new StringWriter();
+
+				// Write XML to StringWriter
+				jaxbMarshaller.marshal(action, sw);
+
+				// Verify XML Content
+				String xmlContent = sw.toString();
+
+				// Return constructed xml object
+				return xmlContent;
+
+			} catch (JAXBException e) {
+				e.printStackTrace();
+				return null;
+			}
+
+		}
 
 	// Convert collection of bourses object to XML format
 	public static String jaxbObjectToXMLBourses(Bourses bourses) {

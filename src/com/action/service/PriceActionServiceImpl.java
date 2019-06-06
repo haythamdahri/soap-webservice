@@ -63,7 +63,7 @@ public class PriceActionServiceImpl implements PriceActionService {
 		return xmlBoursesContent;
 
 	}
-	
+
 	@Override
 	public boolean addBourse(Bourse bourse) {
 
@@ -92,13 +92,19 @@ public class PriceActionServiceImpl implements PriceActionService {
 	@Override
 	public boolean deleteBourse(Long id) {
 		// TODO Auto-generated method stub
-		return false;
+		return this.bourseDao.delete(id);
 	}
 
 	@Override
 	public String getAction(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		// Fetch bourse from database
+		Action action = this.actionDao.find(id);
+		
+		// parse object into xml
+		String xmlActionContent = ObjectXmlConverter.jaxbObjectToXMLAction(action);
+		
+		// Return xml results
+		return xmlActionContent;
 	}
 
 	@Override
@@ -144,22 +150,21 @@ public class PriceActionServiceImpl implements PriceActionService {
 			// Hash clair password
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			System.out.println("Password: " + password);
-		    md.update(password.getBytes());
-		    byte[] digest = md.digest();
-		    String passwordHash = DatatypeConverter.printHexBinary(digest);
-		    
-		    // Fetch admin from database
+			md.update(password.getBytes());
+			byte[] digest = md.digest();
+			String passwordHash = DatatypeConverter.printHexBinary(digest);
+
+			// Fetch admin from database
 			Administrateur administrateur = this.administrateurDao.find(email, passwordHash);
-			
-			return administrateur != null ? true :false;
-			
-		} 
-		catch(Exception ex) {
+
+			return administrateur != null ? true : false;
+
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			return false;
 		}
 	}
-	
+
 	@Override
 	public String getAdmin(Long id) {
 		// Fetch admin from database

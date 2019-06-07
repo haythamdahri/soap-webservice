@@ -1,11 +1,8 @@
 package com.action.service;
 
-import java.util.Collection;
-
 import javax.jws.WebService;
 
 import com.action.entities.Action;
-import com.action.entities.Administrateur;
 import com.action.entities.Bourse;
 
 @WebService
@@ -28,8 +25,8 @@ public interface PriceActionService {
 	
 	public String getAdmin(Long id);
 	public boolean isValidAdmin(String email, String password);
-	public Collection<Administrateur> getAdmins();
-	public boolean updateAdmin(Administrateur administrateur);
-	public boolean deleteAdmin(Long id);
+	
+	public String getActiveActions();
+	public String getActiveBourses();
 	
 }

@@ -170,12 +170,37 @@ public class ActionDaoImpl implements ActionDao {
 	public Collection<Action> findByBourseId(Long id) {
 
 		try {
-			// Create new BourseDao object to retrieve bourse from its id
-			BourseDao bourseDao = new BourseDaoImpl();
+
 
 			PreparedStatement preparedStatement = this.connection
 					.prepareStatement("select *from action where bourse_id=?");
 			preparedStatement.setLong(1, id);
+			Collection<Action> actions = new ArrayList<Action>();
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+
+				Timestamp ts = resultSet.getTimestamp(5);
+				java.sql.Date date = new java.sql.Date(ts.getTime());
+
+				actions.add(new Action(String.valueOf(resultSet.getLong(1)), resultSet.getString(2),
+						resultSet.getDouble(3), resultSet.getDouble(4), date, resultSet.getLong(7)));
+			}
+			return actions;
+		} catch (Exception ex) {
+			System.out.println("Find actions by bourse exception: " + ex.getMessage());
+		}
+		return null;
+
+	}
+	
+
+	@Override
+	public Collection<Action> findActiveActions() {
+		
+		try {
+			
+			PreparedStatement preparedStatement = this.connection
+					.prepareStatement("select *from action order by (((100 * closing_amount) / opening_amount) - 100) desc limit 5;");
 			Collection<Action> actions = new ArrayList<Action>();
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {

@@ -12,5 +12,6 @@ public interface BourseDao {
 	public Collection<Bourse> findAll();
 	public boolean update(Bourse bourse);
 	public boolean delete(Long id);
+	public Collection<Bourse> findActiveBourses();
 
 }

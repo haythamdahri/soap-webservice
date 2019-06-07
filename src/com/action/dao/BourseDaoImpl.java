@@ -114,5 +114,27 @@ public class BourseDaoImpl implements BourseDao {
 		}
 		return false;
 	}
+	
+
+	@Override
+	public Collection<Bourse> findActiveBourses() {
+		
+		try {
+			PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT bourse.*, count(action.bourse_id) as number_of_actions from bourse left join action on (bourse.id = action.bourse_id) group by bourse.id order by number_of_actions desc limit 5");	
+			Collection<Bourse> bourses = new ArrayList<Bourse>();
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while( resultSet.next() ) {
+				Bourse bourse = new Bourse(String.valueOf(resultSet.getLong(1)), resultSet.getString(2));
+				bourse.setNumberOfActions(resultSet.getLong(3));
+				bourses.add(bourse);
+			}
+			return bourses;
+		}
+		catch(Exception ex) {
+			System.out.println("Find bourses by id exception: " + ex.getMessage());
+		}
+		return null;
+		
+	}
 
 }

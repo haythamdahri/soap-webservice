@@ -53,7 +53,7 @@ public class Action implements Serializable {
 		this.closingAmount = closingAmount;
 		this.date = date;
 		
-		double perecentage = 100 - ((100 * this.openingAmount) / this.closingAmount);
+		double perecentage = ((100 * this.closingAmount) / this.openingAmount) - 100;
 		NumberFormat formatter = new DecimalFormat("#0.00");
 		String newPercentage = formatter.format(perecentage);
 		System.out.println("Variation: ==> " + newPercentage);

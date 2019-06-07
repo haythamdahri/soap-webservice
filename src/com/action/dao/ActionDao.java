@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.action.entities.Action;
 
 public interface ActionDao {
-
+	
 	public boolean add(Action action);
 
 	public Action find(Long id);
@@ -21,5 +21,7 @@ public interface ActionDao {
 	public boolean update(Action action);
 
 	public boolean delete(Long id);
+	
+	public Collection<Action> findActiveActions();
 
 }

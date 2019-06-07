@@ -11,7 +11,7 @@ public class Config {
 	private static final String url = "jdbc:mysql://localhost:3306/price_action?useSSL=false";
 	private static final String user = "haytham";
 	private static final String password = "toortoor";
-	
+	private static Connection connection;
 	
 	private Config() {
 		
@@ -33,11 +33,15 @@ public class Config {
 	public Connection getConnection() {
 		
 		try {
+			if( connection != null ) {
+				return connection;
+			}
+			
 			// Load mysql class
 			Class.forName("com.mysql.jdbc.Driver");
 			
 			// Initialize Connection
-			Connection connection = DriverManager.getConnection(url, user, password);
+			connection = DriverManager.getConnection(url, user, password);
 			
 			// Return retrieved connection
 			return connection;

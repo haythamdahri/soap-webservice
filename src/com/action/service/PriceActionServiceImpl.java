@@ -1,8 +1,6 @@
 package com.action.service;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Collection;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -71,7 +69,6 @@ public class PriceActionServiceImpl implements PriceActionService {
 		return this.bourseDao.add(bourse);
 
 	}
-	
 
 	@Override
 	public boolean addAction(Action action) {
@@ -105,10 +102,10 @@ public class PriceActionServiceImpl implements PriceActionService {
 	public String getAction(Long id) {
 		// Fetch bourse from database
 		Action action = this.actionDao.find(id);
-		
+
 		// parse object into xml
 		String xmlActionContent = ObjectXmlConverter.jaxbObjectToXMLAction(action);
-		
+
 		// Return xml results
 		return xmlActionContent;
 	}
@@ -182,21 +179,30 @@ public class PriceActionServiceImpl implements PriceActionService {
 	}
 
 	@Override
-	public Collection<Administrateur> getAdmins() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getActiveActions() {
+
+		// Fetch actions from database
+		Actions actions = new Actions(this.actionDao.findActiveActions());
+
+		// parse object into xml
+		String xmlActionsContent = ObjectXmlConverter.jaxbObjectToXMLActions(actions);
+
+		// Return xml results
+		return xmlActionsContent;
+
 	}
 
 	@Override
-	public boolean updateAdmin(Administrateur administrateur) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public String getActiveBourses() {
+		// Fetch bourses from database
+		Bourses bourses = new Bourses(this.bourseDao.findActiveBourses());
 
-	@Override
-	public boolean deleteAdmin(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		// parse object into xml
+		String xmlBoursesContent = ObjectXmlConverter.jaxbObjectToXMLBourses(bourses);
+
+		// Return xml results
+		return xmlBoursesContent;
+
 	}
 
 }

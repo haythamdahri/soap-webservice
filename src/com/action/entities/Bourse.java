@@ -19,6 +19,9 @@ public class Bourse implements Serializable {
 	
 	@XmlElement(namespace = "http://www.prix-action.ma", name = "name", required = true)
 	private String name;
+	
+	@XmlElement(namespace = "http://www.prix-action.ma", name = "numberOfActions", required = true)
+	private Long numberOfActions;
 		
 	public Bourse() {
 		super();
@@ -46,6 +49,14 @@ public class Bourse implements Serializable {
 		this.name = name;
 	}
 
+	public Long getNumberOfActions() {
+		return numberOfActions;
+	}
+
+	public void setNumberOfActions(Long numberOfActions) {
+		this.numberOfActions = numberOfActions;
+	}
+	
 	@Override
 	public String toString() {
 		return "Bourse [id=" + id + ", name=" + name + "]";

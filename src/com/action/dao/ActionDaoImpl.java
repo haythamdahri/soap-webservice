@@ -90,7 +90,7 @@ public class ActionDaoImpl implements ActionDao {
 			// Create new BourseDao object to retrieve bourse from its id
 			BourseDao bourseDao = new BourseDaoImpl();
 
-			PreparedStatement preparedStatement = this.connection.prepareStatement("select *from action where id=?");
+			PreparedStatement preparedStatement = this.connection.prepareStatement("select *from action where id=? order by date desc");
 			preparedStatement.setLong(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			Collection<Action> actions = new ArrayList<Action>();
@@ -115,7 +115,7 @@ public class ActionDaoImpl implements ActionDao {
 
 			Statement statement = this.connection.createStatement();
 			Collection<Action> actions = new ArrayList<Action>();
-			ResultSet resultSet = statement.executeQuery("select * from action");
+			ResultSet resultSet = statement.executeQuery("select * from action order by date desc");
 			while (resultSet.next()) {
 
 				Timestamp ts = resultSet.getTimestamp(5);

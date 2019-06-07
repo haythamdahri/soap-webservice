@@ -71,6 +71,13 @@ public class PriceActionServiceImpl implements PriceActionService {
 		return this.bourseDao.add(bourse);
 
 	}
+	
+
+	@Override
+	public boolean addAction(Action action) {
+		// Persist action into database
+		return this.actionDao.add(action);
+	}
 
 	@Override
 	public String getActionHistory(String name) {
@@ -137,8 +144,7 @@ public class PriceActionServiceImpl implements PriceActionService {
 
 	@Override
 	public boolean deleteAction(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.actionDao.delete(id);
 	}
 
 	@Override

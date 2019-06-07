@@ -6,7 +6,7 @@ import com.action.entities.Action;
 
 public interface ActionDao {
 
-	public void add(Action action);
+	public boolean add(Action action);
 
 	public Action find(Long id);
 	

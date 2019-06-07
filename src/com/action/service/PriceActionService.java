@@ -20,6 +20,7 @@ public interface PriceActionService {
 	
 	public String getAction(Long id);
 	public String getActions();
+	public boolean addAction(Action action);
 	public String getActionHistory(String name);
 	public String getActionsByBourse(Long id);
 	public boolean updateAction(Action action);

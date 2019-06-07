@@ -20,7 +20,7 @@ public class ActionDaoImpl implements ActionDao {
 	}
 
 	@Override
-	public void add(Action action) {
+	public boolean add(Action action) {
 		try {
 			PreparedStatement preparedStatement = this.connection
 					.prepareStatement("insert into action values (NULL, ?, ?, ?, ?, ?, ?)");
@@ -32,8 +32,10 @@ public class ActionDaoImpl implements ActionDao {
 			preparedStatement.setDouble(5, action.getVariation());
 			preparedStatement.setLong(6, action.getBourseId());
 			preparedStatement.executeUpdate();
+			return true;
 		} catch (Exception ex) {
 			System.out.println("Add exception: " + ex.getMessage());
+			return false;
 		}
 	}
 
